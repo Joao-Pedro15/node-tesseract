@@ -1,11 +1,14 @@
 const tesseract = require('node-tesseract-ocr')
-const { readFile } = require('fs/promises')
 
-async function main() {
-  console.log('hello')
-  const img = (await readFile('image.jpg')).buffer()
-  const text = await tesseract.recognize(img)
-  console.log(text);
+const config = {
+  lang: 'eng',
+  oem: 1,
+  psm: 3
 }
 
-main()
+tesseract
+.recognize('image.jpg').then((text) => {
+  console.log('result: ', text)
+}).catch((error) => {
+  console.log('error', error.message)
+})
